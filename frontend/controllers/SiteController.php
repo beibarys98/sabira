@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Admin;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -75,7 +76,15 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/site/login']);
+        }
+
+        if(Admin::find()->andWhere(['user_id' => Yii::$app->user->id])->exists()){
+            return $this->redirect(['course/index']);
+        }else{
+            return $this->redirect(['course/index2']);
+        }
     }
 
     /**
@@ -86,12 +95,12 @@ class SiteController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            return $this->redirect(['/site/index']);
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->redirect(['/site/index']);
         }
 
         $model->password = '';
@@ -110,7 +119,7 @@ class SiteController extends Controller
     {
         Yii::$app->user->logout();
 
-        return $this->goHome();
+        return $this->redirect(['/site/index']);
     }
 
     /**

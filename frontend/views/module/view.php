@@ -1,0 +1,81 @@
+<?php
+
+use common\models\Lesson;
+use yii\grid\ActionColumn;
+use yii\grid\GridView;
+use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\widgets\DetailView;
+
+/** @var yii\web\View $this */
+/** @var common\models\Module $model */
+
+$this->title = $model->title;
+\yii\web\YiiAsset::register($this);
+?>
+<div class="module-view">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+
+    <p>
+        <?= Html::a(Yii::t('app', 'Өзгерту'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Өшіру'), ['delete', 'id' => $model->id], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                'method' => 'post',
+            ],
+        ]) ?>
+    </p>
+
+    <?= DetailView::widget([
+        'model' => $model,
+        'attributes' => [
+            'id',
+            'course.title',
+            'title',
+            [
+                'attribute' => 'img_path',
+                'format' => 'raw',
+                'value' => function($model){
+                    return Html::a('Сурет', [$model->img_path], ['target' => '_blank']);
+                }
+            ]
+        ],
+    ]) ?>
+
+    <br>
+    <hr>
+
+    <h1>Сабақтары</h1>
+
+    <p>
+        <?= Html::a(Yii::t('app', 'Қосу'), ['lesson/create'], ['class' => 'btn btn-success']) ?>
+    </p>
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            [
+                'attribute' => 'id',
+                'headerOptions' => ['style' => 'width: 5%'],
+            ],
+            'title',
+            [
+                'attribute' => 'img_path',
+                'format' => 'raw',
+                'value' => function($model){
+                    return Html::a('Сурет', [$model->img_path], ['target' => '_blank']);
+                }
+            ],
+            [
+                'class' => ActionColumn::className(),
+                'urlCreator' => function ($action, Lesson $model, $key, $index, $column) {
+                    return Url::toRoute(['lesson/' . $action, 'id' => $model->id]);
+                }
+            ],
+        ],
+    ]); ?>
+
+</div>
