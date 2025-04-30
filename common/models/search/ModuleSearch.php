@@ -67,6 +67,7 @@ class ModuleSearch extends Module
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'course_id' => $this->course_id,
         ]);
 
         $query->andFilterWhere(['like', 'course.title', $this->course]);

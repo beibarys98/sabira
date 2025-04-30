@@ -34,9 +34,9 @@ class Participant extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'course_id', 'name'], 'required'],
+            [['user_id', 'course_id', 'file_path'], 'required'],
             [['user_id', 'course_id'], 'integer'],
-            [['name'], 'string', 'max' => 255],
+            [['file_path'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['course_id'], 'exist', 'skipOnError' => true, 'targetClass' => Course::class, 'targetAttribute' => ['course_id' => 'id']],
         ];

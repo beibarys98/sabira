@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Course;
+use common\models\Participant;
 use common\models\search\CourseSearch;
 use common\models\search\ModuleSearch;
 use Yii;
@@ -60,6 +61,35 @@ class CourseController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
+    public function actionUploadReceipt()
+    {
+        $courseId = Yii::$app->request->post('course_id');
+        $file = UploadedFile::getInstanceByName('receipt');
+
+        if ($file && $file->extension === 'pdf') {
+            $filePath = 'uploads/' . Yii::$app->security->generateRandomString() . '.' . $file->extension;
+            if ($file->saveAs($filePath)) {
+                $participant = new Participant();
+                $participant->user_id = Yii::$app->user->id;
+                $participant->course_id = $courseId;
+                $participant->file_path = $filePath; // If you want to store it
+
+                if ($participant->save()) {
+                    Yii::$app->session->setFlash('success', 'Сәтті тіркелдіңіз және квитанция жүктелді.');
+                } else {
+                    Yii::$app->session->setFlash('error', 'Қатысушыны тіркеу кезінде қате пайда болды.');
+                }
+            } else {
+                Yii::$app->session->setFlash('error', 'Файлды сақтау кезінде қате пайда болды.');
+            }
+        } else {
+            Yii::$app->session->setFlash('error', 'PDF файлын таңдаңыз.');
+        }
+
+        return $this->redirect(['view2', 'id' => $courseId]);
+    }
+
 
     /**
      * Displays a single Course model.

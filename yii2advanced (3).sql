@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Apr 29, 2025 at 12:37 PM
+-- Generation Time: Apr 30, 2025 at 01:36 AM
 -- Server version: 5.7.44
--- PHP Version: 8.2.24
+-- PHP Version: 8.2.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -68,7 +68,8 @@ CREATE TABLE `course` (
 --
 
 INSERT INTO `course` (`id`, `title`, `img_path`) VALUES
-(3, 'Отбасылық мәселелерді шешу', 'uploads/RrXNjRg_7Ciu5r67Ub9VXTlrcAfiOx5i.png');
+(3, 'Отбасылық мәселелерді шешу', 'uploads/RrXNjRg_7Ciu5r67Ub9VXTlrcAfiOx5i.png'),
+(4, 'Ене мен келіннің жағдайы', 'uploads/nPjZzY6jvZgecx4OTWZXquhSENewD1VI.jpg');
 
 -- --------------------------------------------------------
 
@@ -125,9 +126,9 @@ CREATE TABLE `module` (
 --
 
 INSERT INTO `module` (`id`, `course_id`, `title`, `img_path`) VALUES
-(3, 3, 'Ұрысу және оның шешімі', 'uploads/2zyu2ArdVJCpHyUNuY2HA6qlLnNlPgr5.png'),
-(4, 3, 'Айқай шу және децибел', 'uploads/4PAkmatF8DqvoUg8jmIP_kxqqfCY9Whb.png'),
-(5, 3, 'Балалармен ойнау мәселесі', 'uploads/Dll4PhOTPqZF7BO_qHaS-rOSMkUmcS6t.png');
+(3, 3, 'Модуль 1. Ұрысу және оның шешімі', 'uploads/2zyu2ArdVJCpHyUNuY2HA6qlLnNlPgr5.png'),
+(4, 3, 'Модуль 2. Айқай шу және децибел', 'uploads/4PAkmatF8DqvoUg8jmIP_kxqqfCY9Whb.png'),
+(5, 3, 'Модуль 3. Балалармен ойнау мәселесі', 'uploads/Dll4PhOTPqZF7BO_qHaS-rOSMkUmcS6t.png');
 
 -- --------------------------------------------------------
 
@@ -139,8 +140,15 @@ CREATE TABLE `participant` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `course_id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `file_path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `participant`
+--
+
+INSERT INTO `participant` (`id`, `user_id`, `course_id`, `file_path`) VALUES
+(3, 2, 3, 'uploads/v98byDiO-vkgNcKA_uc7hmhg7kToW1qx.pdf');
 
 -- --------------------------------------------------------
 
@@ -252,7 +260,7 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT for table `course`
 --
 ALTER TABLE `course`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `homework`
@@ -276,7 +284,7 @@ ALTER TABLE `module`
 -- AUTO_INCREMENT for table `participant`
 --
 ALTER TABLE `participant`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user`

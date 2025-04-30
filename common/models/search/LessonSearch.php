@@ -67,6 +67,7 @@ class LessonSearch extends Lesson
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'module_id' => $this->module_id,
         ]);
 
         $query->andFilterWhere(['like', 'module.title', $this->module]);

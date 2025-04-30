@@ -75,7 +75,7 @@ class ModuleController extends Controller
         $searchModel = new LessonSearch();
         $params = $this->request->queryParams;
         $params['LessonSearch']['module_id'] = $id;
-        $dataProvider = $searchModel->search($params);
+        $dataProvider = $searchModel->search($params, 'LessonSearch');
 
         return $this->render('view2', [
             'model' => $this->findModel($id),
