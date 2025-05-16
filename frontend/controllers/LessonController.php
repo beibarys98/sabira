@@ -4,6 +4,8 @@ namespace frontend\controllers;
 
 use common\models\Lesson;
 use common\models\search\LessonSearch;
+use common\models\search\ModuleSearch;
+use common\models\search\SectionSearch;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -57,8 +59,15 @@ class LessonController extends Controller
      */
     public function actionView($id)
     {
+        $searchModel = new SectionSearch();
+        $params = $this->request->queryParams;
+        $params['SectionSearch']['lesson_id'] = $id;
+        $dataProvider = $searchModel->search($params);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
         ]);
     }
 
@@ -74,9 +83,13 @@ class LessonController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
+    public function actionCreate($id = null)
     {
         $model = new Lesson();
+
+        if($id){
+            $model->module_id = $id;
+        }
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {

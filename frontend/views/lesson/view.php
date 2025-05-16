@@ -1,6 +1,10 @@
 <?php
 
+use common\models\Section;
+use yii\grid\ActionColumn;
+use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
@@ -40,5 +44,34 @@ $this->title = $model->title;
             ],
         ],
     ]) ?>
+
+    <br>
+    <hr>
+
+    <h1>Секциялары</h1>
+
+    <p>
+        <?= Html::a('Қосу', ['section/create', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
+    </p>
+
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            [
+                'attribute' => 'id',
+                'headerOptions' => ['style' => 'width: 5%'],
+            ],
+            'type',
+            [
+                'class' => ActionColumn::className(),
+                'urlCreator' => function ($action, Section $model, $key, $index, $column) {
+                    return Url::toRoute(['section/' . $action, 'id' => $model->id]);
+                }
+            ],
+        ],
+    ]); ?>
 
 </div>

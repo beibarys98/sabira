@@ -50,7 +50,7 @@ $this->title = $model->title;
     <h1>Сабақтары</h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Қосу'), ['lesson/create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Қосу'), ['lesson/create', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([

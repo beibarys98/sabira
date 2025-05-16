@@ -72,6 +72,11 @@ class ModuleController extends Controller
 
     public function actionView2($id)
     {
+        if (Yii::$app->user->isGuest) {
+            Yii::$app->session->setFlash('warning', Yii::t('app', 'Алдымен тіркеліңіз немесе жүйеге кіріңіз.'));
+            return $this->redirect(Yii::$app->user->loginUrl);
+        }
+
         $searchModel = new LessonSearch();
         $params = $this->request->queryParams;
         $params['LessonSearch']['module_id'] = $id;
@@ -89,9 +94,13 @@ class ModuleController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
+    public function actionCreate($id = null)
     {
         $model = new Module();
+
+        if($id){
+            $model->course_id = $id;
+        }
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -101,9 +110,9 @@ class ModuleController extends Controller
                     $filePath = 'uploads/' . Yii::$app->security->generateRandomString() . '.' . $model->file->extension;
                     $model->file->saveAs($filePath);
                     $model->img_path = $filePath;
-                    $model->save(false);
                 }
 
+                $model->save(false);
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {

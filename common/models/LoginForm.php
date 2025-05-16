@@ -22,7 +22,7 @@ class LoginForm extends Model
     {
         return [
             [['username'], 'required', 'message' => 'Толтырыңыз!'],
-            ['username', 'match', 'pattern' => '/^(admin|\+\d{11,15})$/', 'message' => 'Телефон нөмірі немесе "admin" жазыңыз. Мысалы: +77478725287'],
+            ['username', 'match', 'pattern' => '/^(admin|\+\d{11,15})$/', 'message' => 'Мысалы: +77478725287'],
 
             ['password', 'safe'],
 

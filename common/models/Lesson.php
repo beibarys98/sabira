@@ -82,4 +82,10 @@ class Lesson extends \yii\db\ActiveRecord
         return new \common\models\query\LessonQuery(get_called_class());
     }
 
+    public function getSections()
+    {
+        return $this->hasMany(Section::class, ['lesson_id' => 'id']);
+    }
+
+
 }
