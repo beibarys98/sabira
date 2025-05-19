@@ -35,13 +35,6 @@ $this->title = $model->title;
             'id',
             'module.title',
             'title',
-            [
-                'attribute' => 'img_path',
-                'format' => 'raw',
-                'value' => function($model){
-                    return Html::a('Сурет', [$model->img_path], ['target' => '_blank']);
-                }
-            ],
         ],
     ]) ?>
 

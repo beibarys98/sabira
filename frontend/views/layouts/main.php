@@ -39,10 +39,11 @@ AppAsset::register($this);
 
     if (Admin::find()->andWhere(['user_id' => Yii::$app->user->id])->exists()) {
         $menuItems = [
+            ['label' => 'Қатысушылар', 'url' => ['/participant/index']],
             ['label' => 'Курстар', 'url' => ['/course/index']],
             ['label' => 'Модульдер', 'url' => ['/module/index']],
             ['label' => 'Сабақтар', 'url' => ['/lesson/index']],
-            ['label' => 'Қатысушылар', 'url' => ['/participant/index']],
+            ['label' => 'Кітаптар', 'url' => ['/book/index']],
         ];
     }
 

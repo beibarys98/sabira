@@ -20,8 +20,6 @@ use yii\bootstrap5\ActiveForm;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Атауы'])->label(false) ?>
 
-    <?= $form->field($model, 'file')->fileInput()->label(false) ?>
-
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Сақтау'), ['class' => 'btn btn-success']) ?>
     </div>

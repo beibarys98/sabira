@@ -63,13 +63,6 @@ $this->title = $model->title;
             ],
             'title',
             [
-                'attribute' => 'img_path',
-                'format' => 'raw',
-                'value' => function($model){
-                    return Html::a('Сурет', [$model->img_path], ['target' => '_blank']);
-                }
-            ],
-            [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Lesson $model, $key, $index, $column) {
                     return Url::toRoute(['lesson/' . $action, 'id' => $model->id]);

@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Module;
+use yii\bootstrap5\LinkPager;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -25,6 +26,9 @@ $this->title = Yii::t('app', 'Модульдер');
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'pager' => [
+            'class' => LinkPager::class,
+        ],
         'columns' => [
             [
                 'attribute' => 'id',

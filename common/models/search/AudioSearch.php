@@ -4,23 +4,21 @@ namespace common\models\search;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Lesson;
+use common\models\Audio;
 
 /**
- * LessonSearch represents the model behind the search form of `common\models\Lesson`.
+ * AudioSearch represents the model behind the search form of `common\models\Audio`.
  */
-class LessonSearch extends Lesson
+class AudioSearch extends Audio
 {
-    public $module;
-
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'module_id'], 'integer'],
-            [['title', 'module'], 'safe'],
+            [['id', 'book_id'], 'integer'],
+            [['title', 'file_path'], 'safe'],
         ];
     }
 
@@ -43,18 +41,13 @@ class LessonSearch extends Lesson
      */
     public function search($params, $formName = null)
     {
-        $query = Lesson::find()->joinWith('module');
+        $query = Audio::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
-        $dataProvider->sort->attributes['module'] = [
-            'asc' => ['module.title' => SORT_ASC],
-            'desc' => ['module.title' => SORT_DESC],
-        ];
 
         $this->load($params, $formName);
 
@@ -67,11 +60,11 @@ class LessonSearch extends Lesson
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'module_id' => $this->module_id,
+            'book_id' => $this->book_id,
         ]);
 
-        $query->andFilterWhere(['like', 'module.title', $this->module]);
-        $query->andFilterWhere(['like', 'title', $this->title]);
+        $query->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'file_path', $this->file_path]);
 
         return $dataProvider;
     }
